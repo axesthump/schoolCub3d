@@ -6,7 +6,7 @@
 #    By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/08/07 16:12:25 by casubmar          #+#    #+#              #
-#    Updated: 2020/08/11 17:34:30 by casubmar         ###   ########.fr        #
+#    Updated: 2020/09/07 20:42:20 by casubmar         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,11 @@ FUNC =	$(FOLDER_SRCS)cub3d $(FOLDER_SRCS)ft_pixel_put\
 		$(FOLDER_SRCS)ft_key_press $(FOLDER_SRCS)ft_drow_map\
 		$(FOLDER_SRCS)ft_init_textures $(FOLDER_SRCS)ft_drow_3d\
 		$(FOLDER_SRCS)ft_print $(FOLDER_SRCS)ft_drow_3d_utils\
-		$(FOLDER_SRCS)ft_sprite_utils $(FOLDER_SRCS)ft_print_sprite
+		$(FOLDER_SRCS)ft_sprite_utils $(FOLDER_SRCS)ft_print_sprite\
+		$(FOLDER_SRCS)ft_validate $(FOLDER_SRCS)ft_error_handler\
+		$(FOLDER_SRCS)ft_validate_utils $(FOLDER_SRCS)ft_validate_utils_2\
+		$(FOLDER_SRCS)ft_validate_utils_3 $(FOLDER_SRCS)ft_print_sprite_utils\
+		$(FOLDER_SRCS)ft_key_press_utils
 
 SRC = $(addsuffix .c, $(FUNC))
 OBJ = $(addsuffix .o, $(FUNC))

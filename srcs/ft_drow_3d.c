@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 18:15:39 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/03 10:18:14 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:22:34 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,7 @@ void			ft_get_delta_x_y(t_raycast *r)
 		r->delta_dist_y = (!(r->ray_dir_y)) ? 1 : fabs(1 / r->ray_dir_y);
 }
 
-void			ft_get_side_dist_x_y_and_step (t_raycast *r, double x, double y)
+void			ft_get_side_dist_x_y_and_step(t_raycast *r, double x, double y)
 {
 	if (r->ray_dir_x < 0)
 	{
@@ -73,11 +73,15 @@ void			ft_check_hit(t_raycast *r, char **map, t_all *all)
 
 void			ft_get_wall_height(t_all *all, int *line_height)
 {
-	t_raycast *r = &(all->raycast);
-	if (r->side > 1) 
-		r->perp_wall_dist = (r->mapX - all->player.x + (1 - r->stepX) / 2) / r->ray_dir_x;
-	else 
-		r->perp_wall_dist = (r->mapY - all->player.y + (1 - r->stepY) / 2) / r->ray_dir_y;
+	t_raycast *r;
+
+	r = &(all->raycast);
+	if (r->side > 1)
+		r->perp_wall_dist = (r->mapX - all->player.x + (1 - r->stepX) / 2)
+		/ r->ray_dir_x;
+	else
+		r->perp_wall_dist = (r->mapY - all->player.y + (1 - r->stepY) / 2)
+		/ r->ray_dir_y;
 	*line_height = (int)(all->window.screen_h / r->perp_wall_dist);
 	r->drawStart = -(*line_height) / 2 + all->window.screen_h / 2;
 	if (r->drawStart < 0)
@@ -91,7 +95,7 @@ void			ft_drow_3d(t_all *all)
 {
 	t_plr		plr;
 	char		**map;
-	t_raycast 	*r;
+	t_raycast	*r;
 	int			x_pix;
 	int			line_height;
 

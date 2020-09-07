@@ -6,13 +6,13 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 20:17:58 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/02 22:27:50 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/07 21:12:20 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void	ft_sprite_add_back(t_slist **lst, t_slist *new)
+void		ft_sprite_add_back(t_slist **lst, t_slist *new)
 {
 	if (!lst)
 		return ;
@@ -22,13 +22,13 @@ void	ft_sprite_add_back(t_slist **lst, t_slist *new)
 		(ft_sprite_last(*lst))->next = new;
 }
 
-t_slist	*ft_sprite_last(t_slist *sprite)
+t_slist		*ft_sprite_last(t_slist *sprite)
 {
 	if (!sprite)
-		return(NULL);
+		return (NULL);
 	while (sprite->next)
 		sprite = sprite->next;
-	return(sprite);
+	return (sprite);
 }
 
 void		ft_sprite_clear(t_slist *sprite)
@@ -39,11 +39,11 @@ void		ft_sprite_clear(t_slist *sprite)
 	{
 		temp = sprite->next;
 		free(sprite);
-		sprite = temp;		
+		sprite = temp;
 	}
 }
 
-t_slist	*ft_sprite_new(double x, double y)
+t_slist		*ft_sprite_new(double x, double y)
 {
 	t_slist *el;
 

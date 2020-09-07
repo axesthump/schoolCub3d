@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:23:21 by casubmar          #+#    #+#             */
-/*   Updated: 2020/08/12 10:23:59 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/07 20:43:43 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct	s_win
 	void		*win;
 	int			screen_w;
 	int			screen_h;
+	int			floor_color;
+	int			ceilling_color;
 }				t_win;
 
 typedef struct	s_plr
@@ -132,7 +134,42 @@ typedef	struct		s_sprite
 {
 	t_slist			*el;
 	t_textur_info	data;
+	char			*filename;
 }					t_sprite;
+
+typedef	struct	s_validate
+{
+	int			r;
+	int			no;
+	int			so;
+	int			we;
+	int			ea;
+	int			s;
+	int			f;
+	int			c;
+}				t_validate;
+
+typedef	struct	s_s_print
+{
+	double		spr_x;
+	double		spr_y;
+	double		inv_det;
+	double 		trnsfrm_x;
+	double		trnsfrm_y;
+	int			spr_scr_x;
+	int			spr_h;
+	int			start_y;
+	int			end_y;
+	int			spr_w;
+	int			start_x;
+	int			end_x;
+	int			stripe;
+	int			tex_x;
+	int			y;
+	int			d;
+	int			color;
+	int			tex_y;
+}				t_s_print;
 
 typedef struct	s_all
 {
@@ -144,6 +181,8 @@ typedef struct	s_all
 	t_texturs	texturs;
 	t_print		print;
 	t_sprite	sprite;
+	t_validate	validate;
+	t_s_print	s_print;
 }				t_all;
 
 void            ft_pixel_put(t_data *data, int x, int y, int color);
@@ -160,4 +199,27 @@ t_slist			*ft_sprite_last(t_slist *sprite);
 void			ft_sprite_add_back(t_slist **lst, t_slist *new);
 void			ft_print_sprite(t_all *all);
 int				ft_get_pixel_color(t_textur_info *img, int x, int y);
+int				ft_validate(t_all *all, t_list **list);
+int	    		ft_error_handler(t_all *all, t_list *head, int err);
+int				ft_check_nswe(t_all *all, char *row, int *change);
+char			*ft_init_color(char *row, long *n);
+int				ft_is_start_map(char *row);
+int				ft_get_f(t_all *all, char *row);
+int				ft_get_c(t_all *all, char *row);
+int				ft_get_rgb(long *r, long *g, long *b, char *row);
+int				ft_check_last_symbol(char *row, int is_num);
+int				ft_get_we(t_all *all, char *row);
+int				ft_get_ea(t_all *all, char *row);
+int				ft_get_no(t_all *all, char *row);
+int				ft_get_sprite_or_so(t_all *all, char *row);
+int				ft_get_so_texture(t_all *all, char *row);
+int				ft_get_sprite_texture(t_all *all, char *row);
+int				ft_get_screen(t_all *all, char *row);
+void			ft_get_screen_max_size(t_all *all);
+void			ft_print_s_drow(t_all *all, t_s_print *s_prnt);
+t_slist			*ft_sort_sprite(t_slist *head);
+void			ft_move_w_s(t_all *all);
+void			ft_move_a_d(t_all *all);
+void			ft_turn_l_r(t_all *all);
+int				ft_check_step(char **map, int y, int x);
 # endif

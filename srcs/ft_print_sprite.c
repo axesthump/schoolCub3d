@@ -6,39 +6,11 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 20:36:13 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/03 11:11:47 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/07 21:02:05 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
-
-static	t_slist	*ft_sort_sprite(t_slist *head)
-{
-	t_slist *new_root;
-	t_slist *node;
-	t_slist *current;
-
-	new_root = NULL;
-    while (head != NULL)
-    {
-        node = head;
-        head = head->next;
-        if ( new_root == NULL || node->dist > new_root->dist )
-        {
-            node->next = new_root;
-            new_root = node;
-        }
-        else
-        {
-            current = new_root;
-            while ( current->next != NULL && !( node->dist > current->next->dist ) )
-                  current = current->next;
-            node->next = current->next;
-            current->next = node;
-        }
-    }
-    return new_root;
-}
 
 static	void	ft_get_sprite_dist(t_all *all)
 {
@@ -53,73 +25,55 @@ static	void	ft_get_sprite_dist(t_all *all)
 	}
 }
 
+static	void	ft_print_s_init(t_all *all,
+				t_s_print *s_prnt, t_slist *sprite, t_plr *plr)
+{
+	s_prnt->spr_x = sprite->x - plr->x;
+	s_prnt->spr_y = sprite->y - plr->y;
+	s_prnt->inv_det = 1.0 / \
+		(plr->plane_x * plr->p_dir_y - plr->p_dir_x * plr->plane_y);
+	s_prnt->trnsfrm_x = s_prnt->inv_det * \
+		(plr->p_dir_y * s_prnt->spr_x - plr->p_dir_x * s_prnt->spr_y);
+	s_prnt->trnsfrm_y = s_prnt->inv_det * \
+		(-plr->plane_y * s_prnt->spr_x + plr->plane_x * s_prnt->spr_y);
+	s_prnt->spr_scr_x = (int)((all->window.screen_w / 2) * \
+		(1 + s_prnt->trnsfrm_x / s_prnt->trnsfrm_y));
+	s_prnt->spr_h = abs((int)(((all->window.screen_h / (s_prnt->trnsfrm_y)))));
+	s_prnt->start_y = -(s_prnt->spr_h) / 2 + \
+			all->window.screen_h / 2;
+	if (s_prnt->start_y < 0)
+		s_prnt->start_y = 0;
+	s_prnt->end_y = (s_prnt->spr_h) / 2 + \
+		all->window.screen_h / 2;
+	if (s_prnt->end_y >= all->window.screen_h)
+		s_prnt->end_y = all->window.screen_h - 1;
+}
+
+static	void	ft_print_s_get_start_and_end_and_stripe(t_all *all,
+				t_s_print *s_prnt)
+{
+	s_prnt->spr_w = abs((int)(((all->window.screen_h / (s_prnt->trnsfrm_y)))));
+	s_prnt->start_x = -(s_prnt->spr_w) / 2 + s_prnt->spr_scr_x;
+	if (s_prnt->start_x < 0)
+		s_prnt->start_x = 0;
+	s_prnt->end_x = s_prnt->spr_w / 2 + s_prnt->spr_scr_x;
+	if (s_prnt->end_x >= all->window.screen_w)
+		s_prnt->end_x = all->window.screen_w - 1;
+	s_prnt->stripe = s_prnt->start_x;
+}
+
 static	void	ft_print_s(t_all *all, t_slist *sprite, t_textur_info *data)
 {
-	t_raycast *ray = &(all->raycast);
-	t_plr		*plr = &(all->player);
-	double spr_x = sprite->x - plr->x;
-	double spr_y = sprite->y - plr->y;
-	double inv_det = 1.0 / \
-		(plr->plane_x * plr->p_dir_y - plr->p_dir_x * plr->plane_y);
-	double trnsfrm_x = inv_det * \
-		(plr->p_dir_y * spr_x - plr->p_dir_x * spr_y);
-	double trnsfrm_y = inv_det * \
-		(-plr->plane_y * spr_x + plr->plane_x * spr_y);
-	int spr_scr_x = (int)((all->window.screen_w / 2) * \
-		(1 + trnsfrm_x / trnsfrm_y));
-	double v_move_scr = (int)(VMOVE / trnsfrm_y);
-	int spr_h = abs((int)(((all->window.screen_h / (trnsfrm_y))))); //* VDIV
+	t_raycast	*ray;
+	t_plr		*plr;
+	t_s_print	*s_prnt;
 
-	//y_calcs
-	int	 start_y =  -spr_h / 2 + \
-			all->window.screen_h / 2; //+ v_move_scr
-	if (start_y < 0)
-		start_y = 0;
-	int	 end_y = spr_h / 2 + \
-		all->window.screen_h / 2; //+ v_move_scr
-	if (end_y >= all->window.screen_h)
-		end_y = all->window.screen_h - 1;
-	//y_calcs end
-
-	int spr_w = abs((int)(((all->window.screen_h / (trnsfrm_y))))); //* UDIV
-	int	 start_x = -spr_w / 2 + spr_scr_x;
-	if (start_x < 0)
-		start_x = 0;
-	int end_x = spr_w / 2 + spr_scr_x;
-	if (end_x >= all->window.screen_w)
-		end_x = all->window.screen_w - 1;
-	
-	//drow_sprite
-	int	stripe;
-
-	stripe = start_x;
-	while (stripe < end_x)
-	{
-		int tex_x = (int)(256 * (stripe - (-spr_w / 2 + \
-		spr_scr_x)) * all->sprite.data.width / spr_w) / 256;
-		if (trnsfrm_y > 0 && stripe > 0 && stripe < all->window.screen_w && trnsfrm_y < all->raycast.buffer[stripe])
-		{
-			//drow_sprite_y
-			int		y;
-			int		d;
-			int		color;
-
-			y = start_y;
-			while (y < end_y)
-			{
-				d = (y) * 256\
-				- all->window.screen_h * 128 + spr_h * 128; // - v_move_scr
-				int tex_y = ((d * all->sprite.data.height) / spr_h) / 256;
-				color = ft_get_pixel_color(&(all->sprite.data), tex_x, tex_y);
-				if ((color & 0x00FFFFFF) != 0)
-					ft_pixel_put(&(all->image), stripe, y, color);
-				y++;
-			}
-			//
-		}
-		stripe++;
-	}
-	//
+	ray = &(all->raycast);
+	plr = &(all->player);
+	s_prnt = &(all->s_print);
+	ft_print_s_init(all, s_prnt, sprite, plr);
+	ft_print_s_get_start_and_end_and_stripe(all, s_prnt);
+	ft_print_s_drow(all, s_prnt);
 }
 
 void			ft_print_sprite(t_all *all)
