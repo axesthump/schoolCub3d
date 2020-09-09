@@ -6,11 +6,11 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 13:00:01 by casubmar          #+#    #+#             */
-/*   Updated: 2020/08/07 16:55:40 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 18:30:06 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 static	int		ft_init(t_gnl **gnl)
 {

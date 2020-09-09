@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:15:47 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:11:16 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 17:20:50 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@ void			ft_print_s_drow(t_all *all, t_s_print *s_prnt)
 	{
 		s_prnt->tex_x = (int)(256 * (s_prnt->stripe - (-(s_prnt->spr_w) / 2 +
 		s_prnt->spr_scr_x)) * all->sprite.data.width / s_prnt->spr_w) / 256;
-		if (s_prnt->trnsfrm_y > 0 && s_prnt->stripe > 0
+		if (s_prnt->trnsfrm_y > 0 && s_prnt->stripe >= 0
 		&& s_prnt->stripe < all->window.screen_w
 		&& s_prnt->trnsfrm_y < all->raycast.buffer[s_prnt->stripe])
 		{

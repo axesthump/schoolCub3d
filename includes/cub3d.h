@@ -6,15 +6,15 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/07 16:23:21 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:43:43 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:00:25 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 # ifndef CUB3D_H
 
 #define CUB3D_H
-#include "../libs/libft/libft.h"
-#include "../libs/gnl/get_next_line.h"
+#include "./libft.h"
+#include "./get_next_line.h"
 #include "../minilibx_mms/mlx.h"
 #define _USE_MATH_DEFINES
 #include <math.h>
@@ -171,6 +171,12 @@ typedef	struct	s_s_print
 	int			tex_y;
 }				t_s_print;
 
+typedef	struct	s_v_map
+{
+	int			height;
+	int			width;
+}				t_v_map;
+
 typedef struct	s_all
 {
 	t_win		window;
@@ -183,12 +189,14 @@ typedef struct	s_all
 	t_sprite	sprite;
 	t_validate	validate;
 	t_s_print	s_print;
+	t_v_map		map_norme;	
+	t_list		*list;
 }				t_all;
 
 void            ft_pixel_put(t_data *data, int x, int y, int color);
-int				ft_get_map_and_player(t_all *all, int fd);
+int				ft_get_map_and_player(t_all *all, int fd, t_list *list);
 void			ft_key_press_handler(t_all *all);
-void			ft_drow_map(t_all *all);
+int				ft_drow_map(t_all *all);
 int				ft_init_textures(t_all *all);
 void			ft_drow_3d(t_all *all);
 void			ft_print(t_all *all, int line_height, int x_pix);
@@ -199,7 +207,7 @@ t_slist			*ft_sprite_last(t_slist *sprite);
 void			ft_sprite_add_back(t_slist **lst, t_slist *new);
 void			ft_print_sprite(t_all *all);
 int				ft_get_pixel_color(t_textur_info *img, int x, int y);
-int				ft_validate(t_all *all, t_list **list);
+int				ft_validate(t_all *all, t_list *list);
 int	    		ft_error_handler(t_all *all, t_list *head, int err);
 int				ft_check_nswe(t_all *all, char *row, int *change);
 char			*ft_init_color(char *row, long *n);
@@ -222,4 +230,9 @@ void			ft_move_w_s(t_all *all);
 void			ft_move_a_d(t_all *all);
 void			ft_turn_l_r(t_all *all);
 int				ft_check_step(char **map, int y, int x);
+int				ft_validate_map(t_all **all_m, char **map);
+int				ft_make_screen(t_all *all);
+void			ft_drow_sky_floor(t_all *all);
+t_list			*ft_get_map(t_list *list);
+
 # endif

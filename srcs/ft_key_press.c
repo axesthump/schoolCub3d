@@ -6,18 +6,16 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 17:17:25 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:44:32 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 19:36:43 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-int				ft_check_step(char **map, int y, int x)
+static	int		ft_key_exit(t_all *all)
 {
-	if (map[y][x] == ' ' || map[y][x] == '0'
-	|| map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'W'
-		|| map[y][x] == 'E')
-		return (1);
+	exit(0);
+	++all;
 	return (0);
 }
 
@@ -85,6 +83,7 @@ void			ft_key_press_handler(t_all *all)
 	all->move.r_arr = 0;
 	all->move.esc = 0;
 	mlx_hook(all->window.win, 2, (1L << 0), ft_key_press, all);
-	mlx_hook(all->window.win, 3, 1L << 1, ft_key_release, all);
+	mlx_hook(all->window.win, 3, (1L << 1), ft_key_release, all);
+	mlx_hook(all->window.win, 17, (1L << 17), ft_key_exit, all);
 	mlx_loop_hook(all->window.mlx, ft_key_controls, all);
 }

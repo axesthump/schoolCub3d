@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 16:44:26 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:37:38 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:12:25 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,22 +94,26 @@ static	int		ft_get(t_all **all, t_list **list)
 		tmp = tmp->next;
 	}
 	(*all)->window.map[++i] = NULL;
+	if (ft_validate_map(all, (*all)->window.map) < 0)
+		return (-6);
 	return (0);
 }
 
-int				ft_get_map_and_player(t_all *all, int fd)
+int				ft_get_map_and_player(t_all *all, int fd, t_list *list)
 {
-	t_list	*list;
 	char	*line;
 	int		err;
 
-	list = NULL;
 	while (get_next_line(fd, &line) > 0)
 		ft_lstadd_back(&list, ft_lstnew(line));
 	ft_lstadd_back(&list, ft_lstnew(line));
-	if ((err = ft_validate(all, &list)) < 0)
+	if ((err = ft_validate(all, list)) < 0)
 		return (err);
-	if (ft_get(&all, &list))
+	if ((list = ft_get_map(list)) == NULL)
+		return (-6);
+	if ((err = ft_get(&all, &list)) < 0 || !err)
+		return (err);
+	else if (err > 0)
 		return (1);
 	return (0);
 }

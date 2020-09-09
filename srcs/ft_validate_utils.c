@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 18:48:54 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:12:50 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:07:54 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,8 +86,9 @@ int				ft_get_c(t_all *all, char *row)
 
 int				ft_get_rgb(long *r, long *g, long *b, char *row)
 {
-	if (row[0] != ' ' || ft_check_last_symbol(row, 0) == -1)
+	if (ft_check_last_symbol(row, 0) == -1)
 		return (-4);
+	++row;
 	while (*row == ' ')
 		++row;
 	if (!(ft_isdigit((*row))))
@@ -97,7 +98,8 @@ int				ft_get_rgb(long *r, long *g, long *b, char *row)
 	if (!(row = ft_init_color(row, g)))
 		return (-4);
 	row = ft_init_color(row, b);
-	if (*r < 0 || *g < 0 || *b < 0)
+	if (*r < 0 || *g < 0 || *b < 0
+		|| *r > 255 || *g > 255 || *b > 255)
 		return (-4);
 	return (0);
 }

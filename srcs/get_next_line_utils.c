@@ -6,11 +6,11 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/06/10 13:00:35 by casubmar          #+#    #+#             */
-/*   Updated: 2020/08/07 16:54:20 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 18:30:40 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "get_next_line.h"
+#include "../includes/get_next_line.h"
 
 static void		ft_quick_sort(t_fd *fds, int start, int end)
 {

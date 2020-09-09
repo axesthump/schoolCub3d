@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/08/11 17:20:37 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:27:15 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 20:38:15 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void			ft_drow_sky_floor(t_all *all)
 	}
 }
 
-void			ft_drow_map(t_all *all)
+int				ft_drow_map(t_all *all)
 {
 	all->image.img =
 	mlx_new_image(all->window.mlx, all->window.screen_w, all->window.screen_h);
@@ -47,4 +47,5 @@ void			ft_drow_map(t_all *all)
 	ft_drow_3d(all);
 	mlx_put_image_to_window(all->window.mlx,
 							all->window.win, all->image.img, 0, 0);
+	return (1);
 }

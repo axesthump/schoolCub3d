@@ -1,19 +1,30 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_isascii.c                                       :+:      :+:    :+:   */
+/*   ft_get_map_and_player_utils.c                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/30 12:54:47 by casubmar          #+#    #+#             */
-/*   Updated: 2020/05/01 12:29:18 by casubmar         ###   ########.fr       */
+/*   Created: 2020/09/09 17:52:56 by casubmar          #+#    #+#             */
+/*   Updated: 2020/09/09 21:26:06 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-int	ft_isascii(int c)
+#include "../includes/cub3d.h"
+
+t_list			*ft_get_map(t_list *list)
 {
-	if (c >= 0 && c < 128)
-		return (1);
-	else
-		return (0);
+	char	*content;
+	t_list	*tmp;
+
+	content = list->content;
+	while (!ft_is_start_map(content) || content[0] == '\0')
+	{
+		tmp = list->next;
+		content = tmp->content;
+		free(list->content);
+		free(list);
+		list = tmp;
+	}
+	return (list);
 }

@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/03 20:44:10 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:12:33 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:07:05 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,10 +37,10 @@ static	int		ft_check_row(char *row, t_all *all)
 		if ((err = ft_check_nswe(all, row, &change)) < 0)
 			return (err);
 		if (row[0] == 'F' && (change = 1))
-			if ((err = ft_get_f(all, row + 1)) < 0)
+			if ((err = ft_get_f(all, row)) < 0)
 				return (err);
 		if (row[0] == 'C' && (change = 1))
-			if ((err = ft_get_c(all, row + 1)) < 0)
+			if ((err = ft_get_c(all, row)) < 0)
 				return (err);
 		if ((ft_is_start_map(row) && ft_all_ruls(all)) || change)
 			return (0);
@@ -69,13 +69,12 @@ static	void	ft_init_validate(t_all *all)
 	all->validate.we = 0;
 }
 
-int				ft_validate(t_all *all, t_list **list)
+int				ft_validate(t_all *all, t_list *list)
 {
 	t_list	*head;
-	char	*row;
 	int		err;
 
-	head = *list;
+	head = list;
 	ft_init_validate(all);
 	if ((ft_check_first_row(head->content)) == -1)
 		return (-1);

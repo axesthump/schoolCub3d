@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 18:57:21 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:14:48 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:27:30 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,24 +14,19 @@
 
 int				ft_get_sprite_or_so(t_all *all, char *row)
 {
-	if (row[1] != ' ' && row[1] != 'O')
-		return (-2);
+	if (row[1] == 'O')
+	{
+		if ((ft_get_so_texture(all, row + 2)) < 0)
+			return (-3);
+		else
+			return (0);
+	}
 	else
 	{
-		if (row[1] == ' ')
-		{
-			if ((ft_get_sprite_texture(all, row + 1)) < 0)
-				return (-3);
-			else
-				return (0);
-		}
+		if ((ft_get_sprite_texture(all, row + 1)) < 0)
+			return (-3);
 		else
-		{
-			if ((ft_get_so_texture(all, row + 2)) < 0)
-				return (-3);
-			else
-				return (0);
-		}
+			return (0);
 	}
 }
 
@@ -45,7 +40,7 @@ int				ft_get_so_texture(t_all *all, char *row)
 		++row;
 	if ((fd = open(row, O_RDONLY)) == -1)
 		return (-1);
-	all->texturs.so.filename = row;
+	all->texturs.so.filename = ft_strdup(row);
 	all->validate.so += 1;
 	close(fd);
 	if (all->validate.so != 1)
@@ -63,7 +58,7 @@ int				ft_get_sprite_texture(t_all *all, char *row)
 		++row;
 	if ((fd = open(row, O_RDONLY)) == -1)
 		return (-1);
-	all->sprite.filename = row;
+	all->sprite.filename = ft_strdup(row);
 	all->validate.s += 1;
 	close(fd);
 	if (all->validate.s != 1)
@@ -73,7 +68,7 @@ int				ft_get_sprite_texture(t_all *all, char *row)
 
 int				ft_get_screen(t_all *all, char *row)
 {
-	if (row[1] != ' ' || ft_check_last_symbol(row, 1) == -1)
+	if (ft_check_last_symbol(row, 1) == -1)
 		return (-1);
 	else
 	{
@@ -91,6 +86,8 @@ int				ft_get_screen(t_all *all, char *row)
 			return (-1);
 		all->window.screen_h = ft_atoi(row);
 		ft_get_screen_max_size(all);
+		if (all->window.screen_h == 0 || all->window.screen_w == 0)
+			return (-1);
 		return (all->validate.r == 1 ? 0 : -1);
 	}
 }
@@ -105,9 +102,5 @@ void			ft_get_screen_max_size(t_all *all)
 		all->window.screen_w = width;
 	if (all->window.screen_h > height)
 		all->window.screen_h = height;
-	if (all->window.screen_w == 0)
-		all->window.screen_w = 640;
-	if (all->window.screen_h == 0)
-		all->window.screen_h = 480;
 	all->validate.r += 1;
 }

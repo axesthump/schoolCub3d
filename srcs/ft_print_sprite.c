@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 20:36:13 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:02:05 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 18:00:19 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ static	void	ft_print_s_init(t_all *all,
 	s_prnt->end_y = (s_prnt->spr_h) / 2 + \
 		all->window.screen_h / 2;
 	if (s_prnt->end_y >= all->window.screen_h)
-		s_prnt->end_y = all->window.screen_h - 1;
+		s_prnt->end_y = all->window.screen_h;
 }
 
 static	void	ft_print_s_get_start_and_end_and_stripe(t_all *all,
@@ -58,11 +58,11 @@ static	void	ft_print_s_get_start_and_end_and_stripe(t_all *all,
 		s_prnt->start_x = 0;
 	s_prnt->end_x = s_prnt->spr_w / 2 + s_prnt->spr_scr_x;
 	if (s_prnt->end_x >= all->window.screen_w)
-		s_prnt->end_x = all->window.screen_w - 1;
+		s_prnt->end_x = all->window.screen_w;
 	s_prnt->stripe = s_prnt->start_x;
 }
 
-static	void	ft_print_s(t_all *all, t_slist *sprite, t_textur_info *data)
+static	void	ft_print_s(t_all *all, t_slist *sprite)
 {
 	t_raycast	*ray;
 	t_plr		*plr;
@@ -90,7 +90,7 @@ void			ft_print_sprite(t_all *all)
 		temp = head;
 		while (temp)
 		{
-			ft_print_s(all, temp, &(all->sprite.data));
+			ft_print_s(all, temp);
 			temp = temp->next;
 		}
 	}

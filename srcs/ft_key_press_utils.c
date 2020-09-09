@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 20:41:40 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:56:53 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 16:33:07 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,20 @@ void			ft_move_w_s(t_all *all)
 	if (all->move.w)
 	{
 		if (ft_check_step(all->window.map, (int)all->player.y,
-			(int)(all->player.x + all->player.p_dir_x * SPEED + 0.001)))
+			(int)(all->player.x + all->player.p_dir_x * (SPEED + 0.01))))
 			all->player.x += all->player.p_dir_x * SPEED;
 		if (ft_check_step(all->window.map,
-			(int)(all->player.y + all->player.p_dir_y * SPEED + 0.001),\
+			(int)(all->player.y + all->player.p_dir_y * (SPEED + 0.01)),\
 			(int)all->player.x))
 			all->player.y += all->player.p_dir_y * SPEED;
 	}
 	if (all->move.s)
 	{
 		if (ft_check_step(all->window.map, (int)all->player.y,\
-			(int)(all->player.x - all->player.p_dir_x * SPEED + 0.001)))
+			(int)(all->player.x - all->player.p_dir_x * (SPEED + 0.01))))
 			all->player.x -= all->player.p_dir_x * SPEED;
 		if (ft_check_step(all->window.map,
-			(int)(all->player.y - all->player.p_dir_y * SPEED + 0.001),\
+			(int)(all->player.y - all->player.p_dir_y * (SPEED + 0.01)),\
 			(int)all->player.x))
 			all->player.y -= all->player.p_dir_y * SPEED;
 	}
@@ -41,20 +41,20 @@ void			ft_move_a_d(t_all *all)
 	if (all->move.a)
 	{
 		if (ft_check_step(all->window.map, (int)all->player.y,\
-			(int)(all->player.x - all->player.plane_x * SPEED + 0.001)))
+			(int)(all->player.x - all->player.plane_x * (SPEED + 0.01))))
 			all->player.x -= all->player.plane_x * SPEED;
 		if (ft_check_step(all->window.map,
-			(int)(all->player.y - all->player.plane_y * SPEED + 0.001),\
+			(int)(all->player.y - all->player.plane_y * (SPEED + 0.01)),\
 			(int)all->player.x))
 			all->player.y -= all->player.plane_y * SPEED;
 	}
 	if (all->move.d)
 	{
 		if (ft_check_step(all->window.map, (int)all->player.y,\
-			(int)(all->player.x + all->player.plane_x * SPEED + 0.001)))
+			(int)(all->player.x + all->player.plane_x * (SPEED + 0.01))))
 			all->player.x += all->player.plane_x * SPEED;
 		if (ft_check_step(all->window.map,
-			(int)(all->player.y + all->player.plane_y * SPEED + 0.001),\
+			(int)(all->player.y + all->player.plane_y * (SPEED + 0.01)),\
 			(int)all->player.x))
 			all->player.y += all->player.plane_y * SPEED;
 	}
@@ -97,4 +97,13 @@ void			ft_turn_l_r(t_all *all)
 	}
 	if (all->move.r_arr)
 		ft_turn_r(all);
+}
+
+int				ft_check_step(char **map, int y, int x)
+{
+	if (map[y][x] == ' ' || map[y][x] == '0'
+	|| map[y][x] == 'N' || map[y][x] == 'S' || map[y][x] == 'W'
+		|| map[y][x] == 'E')
+		return (1);
+	return (0);
 }

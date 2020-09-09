@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 18:38:22 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:01:08 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 15:18:03 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,6 @@ static	void	ft_get_values(t_all *all, t_raycast *r, int line_height)
 	all->print.tex_pos = (r->drawStart -
 				all->window.screen_h / 2 + line_height / 2) * all->print.step;
 	all->print.y = r->drawStart;
-	all->print.shade = 1 / (1 + 0.005 * r->perp_wall_dist + 0.006 * \
-		pow(r->perp_wall_dist, 2));
 }
 
 int				ft_get_pixel_color(t_textur_info *img, int x, int y)

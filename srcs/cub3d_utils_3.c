@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_atoi.c                                          :+:      :+:    :+:   */
+/*   cub3d_utils_3.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2020/04/29 19:13:09 by casubmar          #+#    #+#             */
-/*   Updated: 2020/05/06 15:13:11 by casubmar         ###   ########.fr       */
+/*   Created: 2020/09/09 18:57:56 by casubmar          #+#    #+#             */
+/*   Updated: 2020/09/09 19:02:26 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../includes/cub3d.h"
+
+int	ft_strncmp(const char *str, const char *str2, size_t n)
+{
+	size_t i;
+
+	i = 0;
+	while ((*str || *str2) && i < n)
+	{
+		if (*str != *str2)
+			return ((unsigned char)*str - (unsigned char)*str2);
+		++str;
+		++str2;
+		++i;
+	}
+	return (0);
+}
+
+char	*ft_strrchr(const char *str, int ch)
+{
+	int	i;
+
+	i = ft_strlen(str);
+	while (i >= 0)
+	{
+		if (str[i] == (unsigned char)ch)
+			return ((char *)(str + i));
+		--i;
+	}
+	return (NULL);
+}
 
 static char		*ft_clean(char *s)
 {

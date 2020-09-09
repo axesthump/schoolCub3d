@@ -6,7 +6,7 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/07 18:51:54 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 21:14:29 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 21:29:09 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,14 +49,14 @@ int				ft_get_we(t_all *all, char *row)
 
 	if (ft_check_last_symbol(row, 0) == -1)
 		return (-3);
-	if (row[1] != 'E' && row[2] != ' ')
+	if (row[1] != 'E')
 		return (-2);
 	row += 2;
 	while (*row == ' ')
 		++row;
 	if ((fd = open(row, O_RDONLY)) == -1)
 		return (-3);
-	all->texturs.we.filename = row;
+	all->texturs.we.filename = ft_strdup(row);
 	all->validate.we += 1;
 	close(fd);
 	if (all->validate.we != 1)
@@ -70,14 +70,14 @@ int				ft_get_ea(t_all *all, char *row)
 
 	if (ft_check_last_symbol(row, 0) == -1)
 		return (-3);
-	if (row[1] != 'A' && row[2] != ' ')
+	if (row[1] != 'A')
 		return (-2);
 	row += 2;
 	while (*row == ' ')
 		++row;
 	if ((fd = open(row, O_RDONLY)) == -1)
 		return (-3);
-	all->texturs.ea.filename = row;
+	all->texturs.ea.filename = ft_strdup(row);
 	all->validate.ea += 1;
 	close(fd);
 	if (all->validate.ea != 1)
@@ -91,14 +91,14 @@ int				ft_get_no(t_all *all, char *row)
 
 	if (ft_check_last_symbol(row, 0) == -1)
 		return (-3);
-	if (row[1] != 'O' && row[2] != ' ')
+	if (row[1] != 'O')
 		return (-2);
 	row += 2;
 	while (*row == ' ')
 		++row;
 	if ((fd = open(row, O_RDONLY)) == -1)
 		return (-3);
-	all->texturs.no.filename = row;
+	all->texturs.no.filename = ft_strdup(row);
 	all->validate.no += 1;
 	close(fd);
 	if (all->validate.no != 1)

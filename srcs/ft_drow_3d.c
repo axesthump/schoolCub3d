@@ -6,13 +6,13 @@
 /*   By: casubmar <casubmar@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/09/02 18:15:39 by casubmar          #+#    #+#             */
-/*   Updated: 2020/09/07 20:22:34 by casubmar         ###   ########.fr       */
+/*   Updated: 2020/09/09 17:57:37 by casubmar         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../includes/cub3d.h"
 
-void			ft_get_delta_x_y(t_raycast *r)
+static	void			ft_get_delta_x_y(t_raycast *r)
 {
 	if (!(r->ray_dir_y))
 		r->delta_dist_x = 0;
@@ -24,7 +24,7 @@ void			ft_get_delta_x_y(t_raycast *r)
 		r->delta_dist_y = (!(r->ray_dir_y)) ? 1 : fabs(1 / r->ray_dir_y);
 }
 
-void			ft_get_side_dist_x_y_and_step(t_raycast *r, double x, double y)
+static	void			ft_get_side_dist_x_y_and_step(t_raycast *r, double x, double y)
 {
 	if (r->ray_dir_x < 0)
 	{
@@ -48,7 +48,7 @@ void			ft_get_side_dist_x_y_and_step(t_raycast *r, double x, double y)
 	}
 }
 
-void			ft_check_hit(t_raycast *r, char **map, t_all *all)
+static	void			ft_check_hit(t_raycast *r, char **map)
 {
 	while (r->hit == 0)
 	{
@@ -71,7 +71,7 @@ void			ft_check_hit(t_raycast *r, char **map, t_all *all)
 	}
 }
 
-void			ft_get_wall_height(t_all *all, int *line_height)
+static	void			ft_get_wall_height(t_all *all, int *line_height)
 {
 	t_raycast *r;
 
@@ -88,7 +88,7 @@ void			ft_get_wall_height(t_all *all, int *line_height)
 		r->drawStart = 0;
 	r->drawEnd = *line_height / 2 + all->window.screen_h / 2;
 	if (r->drawEnd >= all->window.screen_h)
-		r->drawEnd = all->window.screen_h - 1;
+		r->drawEnd = all->window.screen_h;
 }
 
 void			ft_drow_3d(t_all *all)
@@ -108,7 +108,7 @@ void			ft_drow_3d(t_all *all)
 		ft_r_init(r, all, x_pix);
 		ft_get_delta_x_y(r);
 		ft_get_side_dist_x_y_and_step(r, plr.x, plr.y);
-		ft_check_hit(r, map, all);
+		ft_check_hit(r, map);
 		ft_get_wall_height(all, &line_height);
 		ft_print(all, line_height, x_pix);
 		all->raycast.buffer[x_pix] = all->raycast.perp_wall_dist;
